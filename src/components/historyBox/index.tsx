@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Bell from "../../assets/images/icons8-bell-32.png";
 
 interface HistoryBoxProps {
   theme: string;
   placeholder: string;
   changeHandler?: (e: any) => void;
 }
-const HistoryBox: React.FC<HistoryBoxProps> = ({ theme }) => {
+const HistoryBox: React.FC<HistoryBoxProps> = ({ }) => {
   return (
     <>
       <div className="Message_box">

@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Bell from "../../assets/images/icons8-bell-32.png";
 
 interface ChatHistoryBoxProps {
   theme: string;
   placeholder: string;
   changeHandler?: (e: any) => void;
 }
-const ChatHistoryBox: React.FC<ChatHistoryBoxProps> = ({ theme }) => {
+const ChatHistoryBox: React.FC<ChatHistoryBoxProps> = ({ }) => {
   return (
     <>
       <div className="Message_box">
