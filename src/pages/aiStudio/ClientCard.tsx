@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { useSelector } from "react-redux";
 interface ClientCardProps {
   picture: string;
   name: string;
@@ -25,7 +24,6 @@ export const ClientCard: React.FC<ClientCardProps> = ({
   setCardActive,
 }) => {
   console.log(cardActive);
-  const theme = useSelector((state: any) => state.theme.value.name);
 
   return (
     <div
@@ -70,15 +68,16 @@ export const ClientCard: React.FC<ClientCardProps> = ({
         <div className="cursor-pointer bg-black-third rounded-full p-2">
           {" "}
           <img
-            className={`${theme}-icons-export`}
-          
+            className="w-[12px]"
+            src="/public/Themes/Aurora/icons/export.svg"
             alt=""
           />
         </div>
         <div className="cursor-pointer bg-black-third rounded-full p-2">
           {" "}
           <img
- className={`${theme}-icons-more`}          
+            className="w-[12px]"
+            src="/public/Themes/Aurora/icons/more-square.svg"
             alt=""
           />
         </div>

@@ -49,7 +49,7 @@ export const AiStudio = () => {
             className="w-full border border-main-border bg-black-secondary py-1 rounded-md outline-none text-[10px] text-primary-text"
             type="text"
           />
-          <img className={`${theme}-iconst-send`} alt="" />
+          <img src="/public/Themes/Aurora/icons/send.svg" alt="" />
         </div>
         <div className="bg-black-primary text-primary-text p-4 rounded-lg space-y-5">
           <div className="flex items-center gap-1 text-sm font-semibold ">
@@ -66,7 +66,7 @@ export const AiStudio = () => {
           {isStateOpen && (
             <div className="text-xs">
               <div className=" max-w-[130px] mt-4 flex items-center gap-1 bg-brand-secondary-color text-black px-3 py-[2px] rounded-full text-xs font-medium">
-                <img className={`${theme}-icons-tag`} alt="" />
+                <img src="/public/Themes/Aurora/icons/tag.svg" alt="" />
                 Re-planning
               </div>
               <p className="mt-4 text-secondary-text">
@@ -115,8 +115,8 @@ export const AiStudio = () => {
                     <span className="text-gray-400">29 July - 4 August</span>
                   </div>
                   <img
-                    className={`${theme}-icons-edit cursor-pointer`}
-                   
+                    className="cursor-pointer"
+                    src="/public/Themes/Aurora/icons/edit.svg"
                     alt=""
                   />
                 </li>
@@ -169,7 +169,7 @@ export const AiStudio = () => {
             <Button theme="Aurora">
               {" "}
               <img src="" alt="" />{" "}
-              <div className={`${theme}-icons-tick-square`} /> Approve
+              <img className={`${theme}-icons-tick-square`} alt="" /> Approve
               All
             </Button>
           </div>

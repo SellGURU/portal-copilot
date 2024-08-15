@@ -5,6 +5,8 @@ import Card from './card'
 import InfoCard from './InfoCard';
 import NumberBox from './numberBox/numberBox';
 import SearchBox from "./searchBox";
+import HistoryBox from "./historyBox";
+import ChatHistoryBox from "./historyChat";
 import SideMenu from "./sideMenu";
 import Table from './table'
 import TabsWrapper from './Tabs';
@@ -23,5 +25,7 @@ export {
     Table,
     TabsWrapper,
     TopBar,
-    ChatBox
+    ChatBox,
+    HistoryBox,
+    ChatHistoryBox
 }

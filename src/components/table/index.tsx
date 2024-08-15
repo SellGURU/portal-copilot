@@ -78,7 +78,7 @@ const Table: React.FC<TableProps> = ({ classData }) => {
             Apply Filter
           </Button>
           <Button theme={theme}>
-            <RiUserAddLine className={"w-5 h-5"} />
+            <RiUserAddLine className={"  h-5"} />
             Add Patient{" "}
           </Button>
         </div>
