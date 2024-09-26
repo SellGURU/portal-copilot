@@ -101,6 +101,24 @@
   mask-position: center;
   @apply w-6 h-6 bg-[#FFFFFF99];
 }
+
+.Aurora-icons-Summary {
+  mask-image: url(/Themes/Aurora/icons/dataEntry.svg);
+  mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  @apply w-6 h-6 bg-[#FFFFFF99];
+}
+
+.Aurora-icons-DataEntry {
+  mask-image: url(/Themes/Aurora/icons/health.svg);
+  mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  @apply w-6 h-6 bg-[#FFFFFF99];
+}
 // .Aurora-icons-Analysis {
 //   mask-image: url(/Themes/Aurora/icons/biomarker.svg);
 //   mask-size: 100%;
@@ -134,7 +152,7 @@
   @apply w-6 h-6  bg-[#FFFFFF99];
 }
 .Aurora-icons-Calender {
-  mask-image: url(/public/Themes/Aurora/icons/calender-2.svg);
+  mask-image: url(/Themes/Aurora/icons/calender-2.svg);
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
@@ -327,6 +345,24 @@
   @apply w-6 h-6 bg-brand-primary-color;
    ;
 }
+.Aurora-icons-DnaMethylation{
+  mask-image: url(/Themes/Aurora/icons/Temperature.svg);
+  mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  @apply w-6 h-6 bg-brand-primary-color;
+   ;
+}
+.Aurora-icons-MetaboliteLevels{
+  mask-image: url(/Themes/Aurora/icons/Temperature.svg);
+  mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  @apply w-6 h-6 bg-brand-primary-color;
+   ;
+}
 .Aurora-icons-antioxidants{
   mask-image: url(Themes/Aurora/icons/antioxidants.svg);
   mask-size: 100%;
@@ -354,8 +390,8 @@
   @apply w-5 h-5 bg-brand-primary-color;
    ;
 }
-.Aurora-icons-exercise{
-  mask-image: url(/Themes/Aurora/icons/exercise.svg);
+.Aurora-icons-Exercise{
+  mask-image: url(/Themes/Aurora/icons/weight.svg);
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
@@ -435,7 +471,7 @@
   @apply w-5 h-5 bg-brand-primary-color;
    ;
 }
-.Aurora-icons-nutrition{
+.Aurora-icons-Nutrition{
   mask-image: url(Themes/Aurora/icons/apple.svg);
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -444,25 +480,25 @@
   @apply w-6 h-6 bg-brand-secondary-color;
    ;
 }
-.Aurora-icons-mind{
-  mask-image: url(/Themes/Aurora/icons/mind.svg);
+.Aurora-icons-Emotional{
+  mask-image: url(./Themes/Aurora/icons/mind.svg);
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   mask-position: center;
-  @apply w-6 h-6 bg-brand-secondary-color;
+  @apply w-5 h-5 bg-brand-secondary-color;
    ;
 }
-.Aurora-icons-activity{
-  mask-image: url(Themes/Aurora/icons/weight.svg);
+.Aurora-icons-Fitness{
+  mask-image: url(./Themes/Aurora/icons/weight.svg);
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   mask-position: center;
-  @apply w-6 h-6 bg-brand-secondary-color;
+  @apply w-5 h-5 bg-brand-secondary-color;
    ;
 }
-.Aurora-icons-sleep{
+.Aurora-icons-Sleep{
   mask-image: url(/Themes/Aurora/icons/moon.svg);
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
@@ -506,4 +542,96 @@
   mask-position: center;
   @apply w-6 h-6 bg-black-background;
    ;
+}
+.Aurora-icons-FurtherTesting{
+  mask-image: url(/Themes/Aurora/icons/Further-Testing.svg);
+  mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  @apply w-5 h-5 bg-brand-primary-color;
+   ;
+}
+.Aurora-icons-Supplements{
+  mask-image: url(/Themes/Aurora/icons/Supplements.svg);
+  mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  @apply w-5 h-5 bg-brand-primary-color;
+   ;
+}
+.Aurora-icons-GeneralInstructions{
+  mask-image: url(/Themes/Aurora/icons/General-Instructions.svg);
+  mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  @apply w-5 h-5 bg-brand-primary-color;
+   ;
+}
+.Aurora-icons-Pharmaceutical{
+  mask-image: url(/Themes/Aurora/icons/Pharmaceutical.svg);
+  mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  @apply w-5 h-5 bg-brand-primary-color;
+   ;
+}
+.Aurora-icons-Pharmaceutical{
+  mask-image: url(/Themes/Aurora/icons/Pharmaceutical.svg);
+  mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  @apply w-5 h-5 bg-brand-primary-color;
+   ;
+}
+.Aurora-icons-Diet{
+  mask-image: url(/Themes/Aurora/icons/apple.svg);
+  mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  @apply w-5 h-5 bg-brand-primary-color;
+   ;
+}
+.Aurora-icons-Lifestyle{
+  mask-image: url(/Themes/Aurora/icons/LifeStyle.svg);
+  mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  @apply w-5 h-5 bg-brand-primary-color;
+   ;
+}
+.Aurora-icons-Physiological{
+  mask-image: url(./Themes/Aurora/icons/human-body-silhouette-with-focus-on-respiratory-system-svgrepo-com\ 1.svg);
+  mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  @apply w-5 h-5 bg-brand-secondary-color;
+   ;
+}
+.Aurora-icons-check{
+  mask-image: url(/Themes/Aurora/icons/Circle-Loader.svg);
+  mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  @apply w-6 h-6 bg-brand-secondary-color;
+   ;
+}
+.Aurora-icons-setting{
+  mask-image: url(./Themes/Aurora/icons/setting-2.svg);
+  mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  @apply w-6 h-6 bg-[#FFFFFF99];
+}
+.Aurora-icons-setting[data-mode="active"] {
+  @apply bg-[#03DAC5];
 }

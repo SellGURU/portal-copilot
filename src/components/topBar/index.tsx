@@ -10,11 +10,11 @@ const TopBar:React.FC = () => {
         <>
             <div className={`${theme}-TopBar-container`}>
                 <div className={`${theme}-TopBar-container-main`}>
-                    <SearchBox placeholder='Search for Repots, Interventions, Biomarkers...' theme={theme}></SearchBox>
+                    <SearchBox placeholder='search ...' theme={theme}></SearchBox>
                     <div className={`${theme}-TopBar-container-main-boxLayer`}>
-                        <div className={`${theme}-TopBar-Button-layer`}>
+                        {/* <div className={`${theme}-TopBar-Button-layer`}>
                             <img src={'./Themes/Aurora/icons/notification.svg'}  alt="" />
-                        </div>                        
+                        </div>                         */}
                         <div className={`${theme}-TopBar-Button-layer`}>
                             <img src={clinic} alt="" />
                         </div>

@@ -1,10 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Api from "./api";
-import allBiomarkers from './--moch--/data/Allbiomarkers.json';
-
+// import allBiomarkers from './--moch--/data/Allbiomarkers.json';
+import AllBloodtests from './--moch--/data/AllBloodtests.json'
+// import Allactivities from './--moch--/data/Allactivities.json'
 class Application extends Api {
   static getPatients() {
     const response = this.get("/patients");
     return response;
+  }
+
+  static addDataEntery(data:any) {
+    return this.post('/data_entry/',data)
   }
 
   static getReports() {
@@ -23,15 +29,106 @@ class Application extends Api {
     const response = this.post("/getAllBiomarkers", {});
     return response;
   }
-  static getBiomarkersByPatientId(patient_id: number) {
-    const patient = allBiomarkers.find(p => p.patient_id === patient_id);
+  static getBloodTest() {
+    const response = this.post("/getBloodTest", {});
+    return response;
+  }
+  static getgraphData() {
+    const response = this.post("/graphData", {});
+    return response;
+  }
+  static getActionPLan() {
+    const response = this.post("/actionplan", {});
+    return response;
+  }
+  static getBiomarkersByPatientId(member_id: number) {
+    const response = Api.get('/patients/'+member_id+'/biomarkers')
+    return response
+    // const patient = allBiomarkers.find(p => p.patient_id === patient_id);
+    // if (patient) {
+    //   return { data: patient.biomarkers };
+    // } else {
+    //   return { data: [] };
+    // }
+  }
+  static getActivityByPatientId(member_id: number) {
+    const response = Api.get('/patients/'+member_id+'/analysis/activity')
+    return response
+    // const patient = Allactivities.find(p => p.patient_id === patient_id);
+    // if (patient) {
+    //   return { data: patient.activities };
+    // } else {
+    //   return { data: [] };
+    // }
+  }
+  static getBloodTestByPatientId(patient_id: number) {
+    const patient = AllBloodtests.find(p => p.patient_id === patient_id);
     if (patient) {
-      return { data: patient.biomarkers };
+      return { data: patient.bloodTests };
     } else {
       return { data: [] };
     }
   }
+
+  static addClient(data:any){
+    const response = this.post("/patients/add_patient",data)
+    return response
+  }
+static getAppoinments(patient_id: number){
+  const response =  this.get(`/patients/`+patient_id+`/overview/appointments`)
+  return response
 }
+static getSummary(member_id: number){
+  const response =  this.get(`/summary/${member_id}`)
+  return response
+}
+static generateTreatmentPlan(data:any){
+  const response =  this.post(`/patients/generate_treatment_plan` , data)
+  return response
+}
+static getTreatmentPlanDescriptions(member_id: number){
+  const response =  this.get(`/patients/show-tplan-description/${member_id}`)
+  return response
+}
+static getTreatmentPlanDetails(member_id: number){
+  const response =  this.get(`/patients/show-benchmarks-details/${member_id}`)
+  return response
+}
+static getTreatmentPlanModalData(data: any){
+  const response =  this.post(`/patients/show_patient_benchmarks` , data)
+  return response
+}
+static showPlanPriorities(){
+  const response =  this.get(`/clinic/show-plan-priorities/`)
+  return response
+}
+static downloadReport(data:any){
+  const response =  this.post(`/patients/download_report` , data)
+  return response
+}
+
+  static updatePlanPriorities(data:any) {
+    const response =  this.post(`/clinic/update-plan-priorities`,{
+      edited_plan_priorities:data
+    })
+    return response    
+  }
+  static showPlanDescription(member_id:any) {
+    const response =  this.get(`/patients/${member_id}/show-tplan-description`)
+    return response    
+  }
+
+  static getPatientReorders(member_id:string) {
+    const response = this.post("/patients/priority_data",{member_id:member_id})
+    return response
+  }
+
+  static savereport(data:any) {
+    const response = this.post("/patients/save_report",data)
+    return response
+  }
+}
+
 
 
 

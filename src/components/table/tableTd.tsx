@@ -14,17 +14,19 @@ const Theme = () => {
 
 export const columns: ColumnDef<Pationt>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "information.name",
     header: "Client Name",
+    enableSorting: false,
+
     cell: ({ row }) => {
       
       
       return (
-        <Link to={`/information/${row.original.information.patient_id}`}>
+        <Link to={`/information/${row.original.information.member_id}/Analysis`}>
           <div className="flex items-center justify-start gap-4">
             <img
               className="w-10 h-10 border rounded-full"
-              src={row.original.information.picture}
+              src={row.original.information.picture!= ''?row.original.information.picture:`https://ui-avatars.com/api/?name=${row.original.information.name}`}
               alt={`${row.original.information.name} image`}
             />
             
@@ -41,7 +43,7 @@ export const columns: ColumnDef<Pationt>[] = [
   },
   {
     accessorKey: "information.member_id",
-    header: "MemberId",
+    header: "Member ID",
   },
   {
     accessorKey: "information.age",
@@ -50,6 +52,7 @@ export const columns: ColumnDef<Pationt>[] = [
   {
     accessorKey: "information.sex",
     header: "Sex",
+    enableSorting: false,
   },
   {
     accessorKey: "information.weight",
@@ -68,16 +71,20 @@ export const columns: ColumnDef<Pationt>[] = [
   },
   {
     accessorKey: "information.last_followup",
-    header: "FollowUp",
+    header: "Last Follow-Up",
   },
   {
     accessorKey: "information.status",
-    header: "State",
+    header: "Status",
+    enableSorting: false,
+
     cell: ({ row }) => {
       return (
+        <div className="items-center justify-center flex ">
         <Badge theme={Theme()} status={row.original.information.status}>
           {row.original.information.status}
         </Badge>
+        </div>
       );
     },
   },
@@ -96,7 +103,6 @@ export const columns: ColumnDef<Pationt>[] = [
     accessorKey: "information.progress",
     header: "Progress",
     cell: ({ row }) => {
-      console.log(row.original.information.progress);
       
       return (
        <div>
@@ -158,8 +164,10 @@ export const columns: ColumnDef<Pationt>[] = [
   {
     accessorKey: "information.action",
     header: "Action",
+    enableSorting: false,
+
     cell: () => {
-      return <PiChatBold className={`${Theme()}-icons-PiChatBold`} />;
+      return <PiChatBold className={`${Theme()}-icons-PiChatBold w-full`} />;
     },
   },
 ];

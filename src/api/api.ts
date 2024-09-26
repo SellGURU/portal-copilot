@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 // http://51.142.20.137:5052
 class Api {
   protected static base_url: string = "https://vercel-backend-one-roan.vercel.app/clinic_copilot";
-
+  // protected static base_url: string = "https://mock.app";
   protected static post(url: string, data?: any,config?:any) {
     if(!config?.noPending ){
       toast.clearWaitingQueue()
@@ -21,9 +21,12 @@ class Api {
     return response;
   }
 
-  protected static get(url:string) {
+  protected static get(url:string , config?:any) {
     // toast.loading('pending ...')
-    const response = axios.get(this.base_url+url);
+    const response = axios.get(this.base_url+url , { headers: {
+      Authorization: "Bearer " + getTokenFromLocalStorage(),
+      "Content-Type": config?.headers?.['Content-Type'] || "application/json",
+    },});
     return response;    
   }
 

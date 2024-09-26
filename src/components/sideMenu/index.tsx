@@ -1,34 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Outlet, useNavigate } from "react-router-dom"
-import icon from '@/assets/images/icon.png';
+import { Outlet, useNavigate  , useLocation} from "react-router-dom"
+
 import { menus } from "./menu";
 import { useSelector } from "react-redux";
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import TopBar from "../topBar";
 
 const SideMenu:React.FC = () => {
-    const theme = useSelector((state:any) => state.theme.value.name)
-    const resolveMenuFromRoute = () => {
-        switch (window.location.pathname) {
-            case "":
-            return "Patient List";
-            case "/patientlist":
-            return "Patient List";
-            default:
-            return window.location.pathname.replace("/", "");
-        }
-    };  
-    const navigate = useNavigate()    
-    const resolveActiveMenu = () => {
-        return menus.filter(menue => menue.name == resolveMenuFromRoute()).length>0 ?menus.filter(menue => menue.name == resolveMenuFromRoute())[0] :menus[0]
-    }      
-    const [activeMenu,setActiveMenu] = useState(resolveActiveMenu())
-    
+    const theme = useSelector((state: any) => state.theme.value.name);
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    const changeMenu = (menu:any) => {
-        setActiveMenu(menu)
-        navigate(menu.url)
-    } 
+    const resolveActiveMenu = () => {
+        return menus.find(menu => menu.url === location.pathname) || menus[0];
+    };
+
+    const [activeMenu, setActiveMenu] = useState(resolveActiveMenu());
+
+    useEffect(() => {
+        const currentActiveMenu = resolveActiveMenu();
+        if (currentActiveMenu.name !== activeMenu.name) {
+            setActiveMenu(currentActiveMenu);
+        }
+    }, [location.pathname, activeMenu]);
+
+    const changeMenu = (menu: any) => {
+        setActiveMenu(menu);
+        navigate(menu.url);
+    };
 
     return (
         <>
@@ -36,14 +35,24 @@ const SideMenu:React.FC = () => {
             <TopBar></TopBar>
             <nav className={`${theme}-SideMenu-nav`}>
                 <div className={`${theme}-SideMenu-logo-container`}>
-                    <img src={icon} alt="" />
+                    <img src="./images/main-logo (1).svg" alt="" />
                 </div>
                 <div className={`${theme}-SideMenu-MenuList-container`}>
                     {menus.map((menu) => {
                         return (
                             <>
                                 <div onClick={() => changeMenu(menu)} data-mode={activeMenu.name == menu.name?'active':''} className={`${theme}-SideMenu-MenuList-menu-container`}>
-                                    <img data-mode={activeMenu.name == menu.name?'active':''} className={`${theme}-icons-${menu.icon}`}  alt="" />
+                                    {menu.name != 'Setting' ?
+                                     <img data-mode={activeMenu.name == menu.name?'active':''}  className={`${theme}-icons-${menu.icon}`}  alt="" />
+                                    :
+                                    <>
+                                    {menu.name == activeMenu.name ?
+                                         <img src={'./Themes/Aurora/icons/setting-2.svg'}   alt="" />
+                                         :
+                                         <img src={'./Themes/Aurora/icons/setting-wite-2.svg'}   alt="" />
+                                    }
+                                    </>
+                                    }
                                     { activeMenu.name === menu.name && menu.name}
                                 </div>
                             </>
@@ -61,6 +70,9 @@ const SideMenu:React.FC = () => {
                         localStorage.clear()
                     }} className={`${theme}-SideMenu-MenuList2-logOut`}>
                         <img className={`${theme}-icons-logOut`}  alt="" />
+                    </div>
+                    <div className="text-[8px] text-secondary-text w-full justify-center flex gap-1 items-center ">
+                        Powered by <img src="./images/sidebar-logo.svg" alt="" />
                     </div>
                 </div>
             </nav>   

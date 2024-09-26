@@ -1,7 +1,7 @@
 import { createHashRouter } from "react-router-dom";
 import Layout from "@/Themes/index";
 import ProtectedRoute from "./Protected";
-import { AiKnowlage, Information, Login, OverView, PatientList, TimeLine } from "@/pages";
+import { AiKnowlage, Information, Login,  PatientList, TimeLine, Setting } from "@/pages";
 import BioMarker from "@/pages/information/Analysis";
 import { Diagnosis } from "@/pages/information/diagnosis";
 import { Intervention } from "@/pages/information/intervention";
@@ -10,6 +10,7 @@ import { TreatmentPlan } from "@/pages/information/Treatment Plan";
 import { ActionPlan } from "@/pages/information/ActionPlan";
 import { Calender } from "@/pages/information/calender";
 import { Messages } from "@/pages/messages";
+import PdfViewerComponent from "@/pages/information/Treatment Plan/PdfViewer";
 const router = createHashRouter([
   {
     path: "/",
@@ -24,11 +25,12 @@ const router = createHashRouter([
         path: "/information/:id",
         element: <Information></Information>,
         children: [
+          // {
+          //   index: true,
+          //   element: <OverView></OverView>,
+          // },
           {
-            index: true,
-            element: <OverView></OverView>,
-          },
-          {
+            
             path: "analysis",
             element: <BioMarker></BioMarker>,
           },
@@ -43,7 +45,9 @@ const router = createHashRouter([
           {
             path: "treatment-plan",
             element: <TreatmentPlan></TreatmentPlan>,
+           
           },
+          
           {
             path: "action-plan",
             element: <ActionPlan></ActionPlan>,
@@ -70,14 +74,24 @@ const router = createHashRouter([
       {
         path: "/ai-knowlage",
         element: <AiKnowlage></AiKnowlage>,
-      },      
+      }, 
+      {
+        path: "/setting",
+        element: <Setting></Setting>,
+      },
+    
+     
     ],
   },
-
+  {
+    path: "pdf-viewer",
+    element: <PdfViewerComponent></PdfViewerComponent>,
+  },
   {
     path: "/login",
     element: <Login></Login>,
   },
+ 
 ]);
 
 export default router;

@@ -3,7 +3,7 @@ export const BiologicalCardInfo = [
     {
         icon:'./Themes/Aurora/icons/camera-purple.svg',
         title: 'Photo Aging ',
-        MAE: '2-5 years',
+        MAE: '3-5 years',
         otherStyles : 'top-0'
     },
     {
@@ -54,11 +54,11 @@ export const BiologicalCardInfo = [
  export const progressInfo = [
     {
         name : 'Nutrition',
-        value : 63,
+        value : 8,
     },
     {
         name : 'Mind',
-        value : 32,
+        value : 22,
     },
     {
         name : 'Activity',
@@ -129,4 +129,50 @@ export const BiologicalCardInfo = [
         Avarage: 99.5 ,
         current:  96,
     },
+ ]
+ export const Progress = [
+    {
+        ID:1,
+        title: 'Physiological',
+        Percentage : 73,
+    },
+    {
+        ID:2,
+        title: 'Emotional',
+        Percentage : 92,
+
+    },
+    {
+        ID:3,
+        title: 'Fitness',
+        Percentage : 35,
+
+    },
+
+ ]
+ export const Score = [
+    {
+        ID:1,
+        title: 'Physiological',
+        Percentage : 4.6,
+    },
+    {
+        ID:2,
+        title: 'Emotional',
+        Percentage : 8,
+
+    },
+    {
+        ID:3,
+        title: 'Fitness',
+        Percentage : 7.3,
+
+    },
+    
+ ]
+ export const Plan_Progress = [
+    {
+        ID:1,
+        Percentage : 0,
+    }
  ]

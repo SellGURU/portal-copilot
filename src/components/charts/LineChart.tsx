@@ -26,19 +26,25 @@ interface LineChartProps {
   dashed?: boolean
    ChartData: {
     dates: string[];
-    values: number[];
+    values: number[] | string[];
   };
   
 }
  export const LineChart: React.FC<LineChartProps> = ({ model , active  , dashed , ChartData}) => {
   const chartRef = useRef<ChartJS<"line">>(null);
-
+  useEffect(() => {
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+      }
+    };
+  }, []);
   const flattenArray = (arr: any[]) => [].concat(...arr);
   const data = useMemo(() => flattenArray(ChartData.values), [ChartData.values]);
   const xData = useMemo(() => flattenArray(ChartData.dates), [ChartData.dates]);
 
   
-  
+
   const formattedChartData = useMemo(
     () => ({
       labels: xData,
@@ -54,7 +60,7 @@ interface LineChartProps {
             model === "area"
               ? 0
               : model === "linear"
-              ? data.map((_, i) => (xData[i] === "04am" ? 5 : 0))
+              ? 2
               : 3,
           pointHitRadius: 10,
           pointHoverRadius: 5,
@@ -77,8 +83,10 @@ interface LineChartProps {
             0,
             chart.chartArea.bottom
           );
-          gradient.addColorStop(0, "rgba(0, 255, 255, 0.8)");
-          gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+          gradient.addColorStop(0, "rgba(0, 255, 255, 1)"); // More opaque at the top
+          gradient.addColorStop(0.3, "rgba(0, 255, 255, 0.6)"); // Mid gradient stop
+          gradient.addColorStop(0.7, "rgba(0, 255, 255, 0.3)"); // Lower gradient stop
+          gradient.addColorStop(1, "rgba(0, 0, 0, 0)"); // Fully transparent at the bottom
           chart.data.datasets[0].backgroundColor = gradient;
           chart.update();
         }
@@ -94,16 +102,18 @@ interface LineChartProps {
     };
 
     if (model === "linear") {
+      const separationIndex = Math.floor(data.length / 2);
+      const separationLineDate = xData[separationIndex];
       plugins.annotation = {
         annotations: {
           line1: {
             type: "line",
-            xMin: "04am",
-            xMax: "04am",
-            yMin: 0,
-            yMax: 10,
+            xMin: separationLineDate,
+            xMax: separationLineDate,
+            yMin: Math.min(...data) - 10, // Adjust for visibility
+            yMax: Math.max(...data) + 20, // Adjust for visibility
             borderColor:  "rgba(0, 255, 255, 0.8)",
-            borderWidth: 1,
+            borderWidth: 2,
             label: {
               content: "Separation Line",
               position: "center",

@@ -5,7 +5,7 @@ import { LineChart, MixedLinesChart } from "@/components/charts";
 
 interface ChartData {
   dates: string[];
-  values: number[] | { Low: number[]; High: number[] };
+  values: number[] | string[] | { systolic: number[]; diastolic: number[] };
 }
 
 interface ChartCardProps {
@@ -14,6 +14,7 @@ interface ChartCardProps {
   status?: string;
   othersTypes?: string[];
   chartData: ChartData;
+  chartType: string
 }
 
 export const NormalChartCard: React.FC<ChartCardProps> = ({
@@ -22,45 +23,54 @@ export const NormalChartCard: React.FC<ChartCardProps> = ({
   othersTypes,
   status,
   chartData,
+  chartType
 }) => {
-
-  
   const [active, setActive] = useState("HCT");
   const theme = useSelector((state: any) => state.theme.value.name);
   if (type === "Blood Pressure") {
-    console.log(chartData);
+    console.log(chartType);
   }
 
   const isBloodPressureValues = (
     values: any
-  ): values is { Low: number[]; High: number[] } => {
+  ): values is { systolic: number[]; diastolic: number[] } => {
     return (
       values &&
       typeof values === "object" &&
-      'Low' in values &&
-      'High' in values &&
-      Array.isArray(values.Low) &&
-      Array.isArray(values.High)
+      'systolic' in values &&
+      'diastolic' in values &&
+      Array.isArray(values.systolic) &&
+      Array.isArray(values.diastolic)
     );
   };
-  const flattenArray = (arr: any[]) => arr.reduce((acc, val) => acc.concat(val), []);
+  const flattenArray = (arr: any[]) =>
+    arr.reduce((acc, val) => acc.concat(val), []);
 
   const averageValue = useMemo(() => {
     const { values } = chartData;
 
     if (type === "Blood Pressure" && isBloodPressureValues(values)) {
-      const { Low, High } = values;
-      const flattenedLow = flattenArray(Low);
-      const flattenedHigh = flattenArray(High);
-      const sumLow = flattenedLow.reduce((acc: number, val: number) => acc + val, 0);
-      const sumHigh = flattenedHigh.reduce((acc: number, val: number) => acc + val, 0);
+      const { systolic, diastolic } = values;
+      const flattenedLow = flattenArray(systolic);
+      const flattenedHigh = flattenArray(diastolic);
+      const sumLow = flattenedLow.reduce(
+        (acc: number, val: number) => acc + val,
+        0
+      );
+      const sumHigh = flattenedHigh.reduce(
+        (acc: number, val: number) => acc + val,
+        0
+      );
       const avgLow = sumLow / flattenedLow.length;
       const avgHigh = sumHigh / flattenedHigh.length;
       return (avgLow + avgHigh) / 2;
     } else if (Array.isArray(values)) {
       const flattenedValues = flattenArray(values);
       if (flattenedValues.length === 0) return 0;
-      const sum = flattenedValues.reduce((acc: number, val: number) => acc + val, 0);
+      const sum = flattenedValues.reduce(
+        (acc: number, val: number) => acc + val,
+        0
+      );
       return sum / flattenedValues.length;
     }
     return 0;
@@ -70,8 +80,8 @@ export const NormalChartCard: React.FC<ChartCardProps> = ({
     const { values, dates } = chartData;
     if (type === "Blood Pressure" && isBloodPressureValues(values)) {
       return {
-        lowValues: values.Low,
-        highValues: values.High,
+        lowValues: values.systolic,
+        highValues: values.diastolic,
         dates: dates,
       };
     }
@@ -85,18 +95,17 @@ export const NormalChartCard: React.FC<ChartCardProps> = ({
     }
     return { dates: [], values: [] };
   }, [chartData, type]);
-console.log(lowHighValues);
 
   return (
     <div className={`${theme}-normalChartCard-container py-3 `}>
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <div className="flex items-center justify-center rounded-lg bg-black-background p-1">
+          {/* <div className="flex items-center justify-center rounded-lg bg-black-background p-1">
             <img
               className={`${theme}-icons-${type?.replace(/\s+/g, "")}`}
               alt=""
             />
-          </div>
+          </div> */}
 
           <h2 className={`${theme}-normalChartCard-title`}>{type}</h2>
         </div>
@@ -135,7 +144,17 @@ console.log(lowHighValues);
         <span className="mx-1 text-primary-text font-medium text-sm">
           {averageValue.toFixed(2)}
         </span>
-        {type === "Temperature" ? "oF" : type === "Heart Rate" ? "bpm" : "%"}
+        {type === "Temperature"
+          ? "oF"
+          : type === "Heart Rate"
+          ? "bpm"
+          : type === "CBC"
+          ? "%"
+          : type === "Left Leg Stand Duration"
+          ? "seconds"
+          : type === "Weight"
+          ? "kg"
+          : "mm/hg"}
       </h2>
       <div className="bg-black-secondary border h-auto  border-main-border px-2 w-full pt-1 pb-4   max-h-[140px] xl:max-h-[223px]  rounded-md ">
         <div className="flex w-full justify-between items-center">
@@ -144,12 +163,16 @@ console.log(lowHighValues);
               ? "oF"
               : type === "Heart Rate"
               ? "bpm"
-              : "%"}
+              : type === "CBC"
+              ? "%"
+              : type === "Left Leg Stand Duration"
+              ? "seconds"
+              : type === "Weight"
+              ? "kg"
+              : "mm/hg"}
           </span>
-          <div className="flex items-center gap-2">
-            <h2 className="text-brand-primary-color text-xs">
-              24 May, 2024
-            </h2>
+          <div className={` ${chartType=== "mix" && 'hidden'} flex items-center gap-2 `}>
+            <h2 className="text-brand-primary-color text-xs">24 May, 2024</h2>
             <img
               data-color="green"
               className={`${theme}-icons-arrow-down`}
@@ -157,13 +180,13 @@ console.log(lowHighValues);
             />
           </div>
         </div>
-        {type === "Blood Pressure" ? (
+        {chartType === "mix" ? (
           <MixedLinesChart ChartData={lowHighValues} />
         ) : (
           <LineChart
             ChartData={lineChartData}
             dashed
-            model={type === "CBC" ? "linear" : "line"}
+            model={chartType}
           />
         )}
       </div>

@@ -5,10 +5,14 @@ import { useSelector } from "react-redux";
 interface AccordionProps {
     title:string
     children?: React.ReactNode;
+    themes?:string
 }
 
-const Accordion:React.FC<AccordionProps> = ({title,children}) => {
-    const theme = useSelector((state: any) => state.theme.value.name);
+const Accordion:React.FC<AccordionProps> = ({title,children,themes}) => {
+    let theme =useSelector((state: any) => state.theme.value.name)
+    if(themes){
+        theme =themes
+    }
     const [isActive,setIsActive] = useState(false)
     const handleClick = () => {
         if (isActive) {
@@ -55,7 +59,7 @@ const Accordion:React.FC<AccordionProps> = ({title,children}) => {
             <div
                 ref={contentRef}
                 style={{ height }}
-                className=" transition-height duration-500 ease-in-out"
+                className=" transition-height duration-500 ease-in-out "
                 onTransitionEnd={handleTransitionEnd}
             >
                 {

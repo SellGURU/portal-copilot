@@ -1,35 +1,47 @@
-import { useContext } from "react";
-import { AppContext } from "@/store/app";
-import { useState, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useContext, useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { BiomarkerCategory , diagnosis } from "@/types";
+import { AppContext } from "@/store/app";
+import { BiomarkerCategory, diagnosis } from "@/types";
 import { Application } from "@/api";
+import { faker } from "@faker-js/faker";
+
 export function useApp() {
   const context = useContext(AppContext);
-  if (context === undefined) throw new Error("AuthContext was used outside of the AuthContextProvider");
+  if (!context) throw new Error("AuthContext was used outside of the AuthContextProvider");
   return context;
 }
-export const useBiomarkers = () => {
+
+const useFetchData = (fetchFunction : any) => {
   const { id } = useParams<{ id: string }>();
-  const [biomarkers, setBiomarkers] = useState<BiomarkerCategory[]>([]);
+  const [data, setData] = useState<BiomarkerCategory[]>([]);
 
   useEffect(() => {
-    const fetchBiomarkers = async () => {
+    const fetchData = async () => {
       if (id) {
         try {
-          const response = await Application.getBiomarkersByPatientId(Number(id));
-          setBiomarkers(response.data);
+          const response = await fetchFunction(Number(id));
+          // console.log(response)
+          if(response.data!='Internal Server Error'){
+            setData(response.data);
+          }else{
+            setData([])
+          }
         } catch (error) {
-          console.error("Failed to fetch biomarkers:", error);
+          console.error("Failed to fetch data:", error);
         }
       }
     };
 
-    fetchBiomarkers();
-  }, [id]);
+    fetchData();
+  }, [id, fetchFunction]);
 
-  return biomarkers;
+  return data;
 };
+
+export const useBiomarkers = () => useFetchData(Application.getBiomarkersByPatientId);
+export const useBloodtest = () => useFetchData(Application.getBloodTestByPatientId);
+
 export const useDiagnosis = () => {
   const { id } = useParams<{ id: string }>();
   const { getPatientById } = useContext(AppContext);
@@ -45,4 +57,12 @@ export const useDiagnosis = () => {
   }, [id, getPatientById]);
 
   return diagnosis;
+};
+
+export const useRandom = () => {
+  const randomColor = useMemo(() => {
+    return () => `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+  }, []);
+
+  return { faker, randomColor };
 };

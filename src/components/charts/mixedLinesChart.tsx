@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useRef , useMemo} from "react";
+import React, { useRef, useEffect, useMemo } from "react";
 import { Line } from "react-chartjs-2";
 import annotationPlugin from "chartjs-plugin-annotation";
 
@@ -26,27 +26,49 @@ ChartJS.register(
   Title,
   annotationPlugin
 );
-interface MixedLinesChartProps{
+interface MixedLinesChartProps {
   active?: boolean;
+  dashed?: boolean;
   ChartData: {
     dates: string[];
     lowValues: number[];
     highValues: number[];
   };
 }
- export const MixedLinesChart : React.FC<MixedLinesChartProps> = ({ ChartData}) => {
-  const chartRef = useRef<ChartJS<"line">>(null);
+export const MixedLinesChart: React.FC<MixedLinesChartProps> = ({
+  ChartData,
+  dashed,
+}) => {
   console.log(ChartData);
-  const flattenArray = (arr: any[]) => arr.reduce((acc, val) => acc.concat(val), []);
+  
+  const chartRef = useRef<ChartJS<"line">>(null);
+  useEffect(() => {
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+      }
+    };
+  }, []);
+  const flattenArray = (arr: any[]) =>
+    arr.reduce((acc, val) => acc.concat(val), []);
 
-  const flattenedDates = useMemo(() => flattenArray(ChartData.dates), [ChartData.dates]);
-  const flattenedLowValues = useMemo(() => flattenArray(ChartData.lowValues), [ChartData.lowValues]);
-  const flattenedHighValues = useMemo(() => flattenArray(ChartData.highValues), [ChartData.highValues]);
+  const flattenedDates = useMemo(
+    () => flattenArray(ChartData.dates),
+    [ChartData.dates]
+  );
+  const flattenedLowValues = useMemo(
+    () => flattenArray(ChartData.lowValues),
+    [ChartData.lowValues]
+  );
+  const flattenedHighValues = useMemo(
+    () => flattenArray(ChartData.highValues),
+    [ChartData.highValues]
+  );
   const data = {
     labels: flattenedDates,
     datasets: [
       {
-        label: "SPB",
+        label: "SBP",
         data: flattenedLowValues,
         borderColor: "blue",
         borderWidth: 1.5,
@@ -60,7 +82,7 @@ interface MixedLinesChartProps{
         pointStyle: "rect",
       },
       {
-        label: "DPB",
+        label: "DBP",
         data: flattenedHighValues,
         borderColor: "red",
         borderWidth: 1.5,
@@ -84,22 +106,29 @@ interface MixedLinesChartProps{
       x: {
         ticks: {
           color: "#FFF",
+             maxRotation: 0,
+          minRotation: 0,
+          autoSkip: true,
+          maxTicksLimit: 5,
+          font : {
+            size : 10,
+          }
         },
         grid: {
           display: false,
           color: "#444",
         },
+       
       },
       y: {
         ticks: {
-          color:  "#FFF",
+          color: "#FFF",
           callback: function (value) {
             return value;
           },
         },
         grid: {
-          
-          display: true,
+          display: dashed ? true : false,
           color: "#444",
         },
         border: {
@@ -139,15 +168,15 @@ interface MixedLinesChartProps{
   // };
   // ChartJS.register(backgroundColorPlugin);
   return (
-    <div className="w-full h-[100px] pb-6">
-      <div className="my-2 flex items-center gap-2 justify-end">
-        <div className="flex items-center gap-1"> 
+    <div className="w-full h-[110px] -mt-4">
+      <div className=" flex items-start gap-2 justify-end">
+        <div className="flex items-center gap-1">
           <div className="w-2 h-1 bg-blue-600" />
-          <span className={`text-[8px]  text-secondary-text`}>SPB</span>
+          <span className={`text-[8px]  text-secondary-text`}>SBP</span>
         </div>
-        <div className="flex items-center gap-1"> 
+        <div className="flex items-center gap-1">
           <div className="w-2 h-1 bg-red-600" />
-          <span className={`text-[8px] text-secondary-text`}>DPB</span>
+          <span className={`text-[8px] text-secondary-text`}>DBP</span>
         </div>
       </div>
       <Line ref={chartRef} data={data} options={options} />
