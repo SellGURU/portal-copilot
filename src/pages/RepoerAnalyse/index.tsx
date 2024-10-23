@@ -1,7 +1,64 @@
 import { useState } from "react"
+import SummaryBox from "./SummaryBox"
 
 const ReportAnalyse = () => {
     const [generateStep,] = useState("Client Summary")
+    const ClientSummaryBoxs = [
+        {
+            name:'Thyroid Health',
+            exam:1,
+            refrence:0,
+            icon:''
+        },
+        {
+            name:'Vitamins & Minerals',
+            exam:1,
+            refrence:0,
+            icon:''
+        },
+        {
+            name:'Bone Health',
+            exam:1,
+            refrence:0,
+            icon:''
+        },
+        {
+            name:'Metabolism & Proteins',
+            exam:1,
+            refrence:0,
+            icon:''
+        },
+        {
+            name:'Cardiac & Vascular system',
+            exam:1,
+            refrence:0,
+            icon:''
+        },
+        {
+            name:'Kidney & Electrolytes',
+            exam:1,
+            refrence:0,
+            icon:''
+        },
+        {
+            name:'Red blood cells & Iron',
+            exam:1,
+            refrence:0,
+            icon:''
+        },
+        {
+            name:'Abdominal Organs',
+            exam:1,
+            refrence:0,
+            icon:''
+        },
+        {
+            name:'Cells & Infection',
+            exam:1,
+            refrence:0,
+            icon:''
+        }                                                                        
+    ]
     return (
         <>
             <div className="w-full bg-[#121212] min-h-screen h-full">
@@ -39,7 +96,13 @@ const ReportAnalyse = () => {
                             </div>   
                         </div>     
                         <div className="mt-[75px] flex gap-14">
-                            <img src="./human.png" alt="" />
+                            <div className="min-w-[330px] w-[330px] relative">
+                                <img className="" src="./human.png" alt="" />
+                                <div>
+                                    <div className="absolute top-[120px] left-[160px] bg-[#FF3E5D] w-[12px] h-[12px] rounded-full"></div>
+                                </div>
+                            </div>
+
                             <div className="flex-grow w-full">
                                 <div className="w-full flex justify-between">
                                     <div>
@@ -63,7 +126,14 @@ const ReportAnalyse = () => {
                                         </div>                                        
                                     </div>
                                 </div>
-                                <div className="text-[#FFFFFF99] text-[12px] mt-4" style={{height:'24px'}}>This document provides a general overview of your test results, but the official laboratory report contains the complete results. It does not offer a diagnosis, which should be made by your doctor based on the tests and clinical context. If you have questions or concerns, consult your doctor. More information is available here.</div>
+                                <div className="text-[#FFFFFF99] text-justify text-[12px] mt-4" style={{lineHeight:'24px'}}>This document provides a general overview of your test results, but the official laboratory report contains the complete results. It does not offer a diagnosis, which should be made by your doctor based on the tests and clinical context. If you have questions or concerns, consult your doctor. More information is available here.</div>
+                                <div className="w-full mt-4 grid gap-4 grid-cols-2">
+                                   {ClientSummaryBoxs.map((el) => {
+                                        return (
+                                            <SummaryBox data={el}></SummaryBox>
+                                        )
+                                   })}
+                                </div>
                             </div>
                         </div>                       
                     </div>
