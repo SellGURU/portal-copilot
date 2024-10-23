@@ -19,6 +19,7 @@ import ResportTest from "@/pages/ReportTest";
 import GenerateNewPlan from "@/pages/information/TreatmentPlan-V2/GenerateNewPlan";
 import FormDataEntry from "@/pages/FormDataEntry";
 import ViewTreatmentPlan from "@/pages/information/TreatmentPlan-V2/viewTreatmentPlan";
+import ReportAnalyse from "@/pages/RepoerAnalyse";
 
 const router = createHashRouter([
   {
@@ -136,6 +137,10 @@ const router = createHashRouter([
     path:"reportTest",
     element:<ResportTest></ResportTest>
   },
+  {
+    path:"reportAnalyse",
+    element:<ReportAnalyse></ReportAnalyse>
+  },  
   {
     path: "/login",
     element: <Login></Login>,
