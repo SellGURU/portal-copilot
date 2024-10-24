@@ -2,6 +2,7 @@ import { useState } from "react"
 import SummaryBox from "./SummaryBox"
 // import MyChartComponent from "./StatusChart"
 import RefrenceBox from "./Boxs/RefrenceBox"
+import StatusChart from "./StatusChart"
 
 const ReportAnalyse = () => {
     const [generateStep,setGeneralStep] = useState("Client Summary")
@@ -81,6 +82,8 @@ const ReportAnalyse = () => {
             name:''
         }                                        
     ]
+    const labels:Array<string> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    const dataPoints = [50, 75, 60, 90, 80, 100, 95];
     const changeStep = (step:string) => {
         setGeneralStep(step)
         document.getElementById(step)?.scrollIntoView({
@@ -182,7 +185,8 @@ const ReportAnalyse = () => {
                                         )
                                     })}
                                 
-                                </div>                             
+                                </div>  
+                                <StatusChart labels={labels} dataPoints={dataPoints} ></StatusChart>                           
                                         {/* <CustomCanvasChart></CustomCanvasChart> */}
                             </div>       
                         </div>   

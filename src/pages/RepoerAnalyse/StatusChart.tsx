@@ -1,170 +1,95 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useRef, useEffect, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React from 'react';
+import { Line } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { ChartOptions, Plugin } from 'chart.js';
 
-const CustomCanvasChart = () => {
-  const canvasRef = useRef(null);
-  const [tooltip, setTooltip] = useState<any>(null);
+// Register necessary components from Chart.js
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Title, Tooltip, Legend);
 
-  useEffect(() => {
-    const canvas:any = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+interface PerformanceChartProps {
+  labels: string[];  // X-axis labels
+  dataPoints: number[];  // Data for the line chart
+}
 
-    const dataPoints = [140, 156, 143, 142, 150, 160]; // Example data
-    const labels = ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
-    const colors = {
-        
-      background: ['#FC5474', '#F39C12', '#2ECC71'], // Red, Yellow, Green
-      line: '#FFD700',
-      points: '#FF6384',
-    };
+const PerformanceChart: React.FC<PerformanceChartProps> = ({ labels, dataPoints }) => {
+  // Chart Data
+  const data = {
+    labels: labels, // Labels passed as props
+    datasets: [
+      {
+        label: 'Performance',
+        data: dataPoints, // Data points passed as props
+        fill: false,
+        borderColor: 'blue',
+        tension: 0.3, // Smooth curve
+      },
+    ],
+  };
 
-    // Chart dimensions and padding
-    const chartWidth = 500;
-    const chartHeight = 120;
-    const padding = 40;
+  // Chart Options
+  const options: ChartOptions<'line'> = {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true,
+        max: 100,
+        ticks: {
+          stepSize: 10,
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top',
+      },
+      tooltip: {
+        enabled: true,
+      },
+    },
+  };
 
-    // Determine Y scale (between min and max)
-    const maxValue = 200;
-    const minValue = 100;
+  // Plugin to draw background layers for "Perfect", "Good", and "Need Focus"
+  const backgroundLayerPlugin: Plugin<'line'> = {
+    id: 'backgroundLayer',
+    beforeDraw: (chart) => {
+      const { ctx, chartArea: { top, bottom, left, right }, scales: { y } } = chart;
 
-    const yScale = chartHeight / (maxValue - minValue);
-    const xSpacing = chartWidth / (dataPoints.length - 1);
+      // Function to draw layers with colors
+      const drawLayer = (yMin: number, yMax: number, color: string) => {
+        ctx.save();
+        ctx.fillStyle = color;
+        ctx.fillRect(left, y.getPixelForValue(yMax), right - left, y.getPixelForValue(yMin) - y.getPixelForValue(yMax));
+        ctx.restore();
+      };
 
-    // Draw background gradient
-    const drawBackground = () => {
-      const gradient = ctx.createLinearGradient(0, 0, 0, chartHeight);
-      gradient.addColorStop(0, colors.background[2]); // Green
-      gradient.addColorStop(0.5, colors.background[1]); // Yellow
-      gradient.addColorStop(1, colors.background[0]); // Red
+      // Draw "Perfect" Layer (80-100)
+      drawLayer(80, 100, 'rgba(0, 255, 0, 0.2)'); // Green for Perfect
 
-      ctx.fillStyle = gradient;
-      ctx.fillRect(padding, 0, chartWidth, chartHeight);
-    };
+      // Draw "Good" Layer (60-80)
+      drawLayer(60, 80, 'rgba(255, 255, 0, 0.2)'); // Yellow for Good
 
-    // Draw the line chart
-    const drawLineChart = () => {
-      ctx.beginPath();
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = colors.line;
-
-      dataPoints.forEach((value, index) => {
-        const x = padding + index * xSpacing;
-        const y = chartHeight - (value - minValue) * yScale;
-
-        if (index === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-      });
-
-      ctx.stroke();
-    };
-
-    // Draw points on the chart
-    const drawPoints = () => {
-      dataPoints.forEach((value, index) => {
-        const x = padding + index * xSpacing;
-        const y = chartHeight - (value - minValue) * yScale;
-        ctx.beginPath();
-        ctx.arc(x, y, 5, 0, Math.PI * 2, true);
-        ctx.fillStyle = colors.points;
-        ctx.fill();
-      });
-    };
-
-    // Draw X-axis labels (Months)
-    const drawLabels = () => {
-      ctx.fillStyle = '#fff';
-      ctx.font = '12px Arial';
-      ctx.textAlign = 'center';
-
-      labels.forEach((label, index) => {
-        const x = padding + index * xSpacing;
-        const y = chartHeight + 20;
-        ctx.fillText(label, x, y);
-      });
-    };
-
-    // Check for hover and display tooltip
-    const handleHover = (event:any) => {
-      const { offsetX, offsetY } = event.nativeEvent;
-      const canvasRect = canvas.getBoundingClientRect();
-
-      dataPoints.forEach((value, index) => {
-        const x = padding + index * xSpacing;
-        const y = chartHeight - (value - minValue) * yScale;
-
-        if (
-          offsetX > x - 5 &&
-          offsetX < x + 5 &&
-          offsetY > y - 5 &&
-          offsetY < y + 5
-        ) {
-          setTooltip({
-            x: x + canvasRect.left,
-            y: y + canvasRect.top - 20,
-            value: `${value} mg/dL`,
-          });
-        }
-      });
-    };
-
-    const clearTooltip = () => setTooltip(null);
-
-    // Clear canvas
-    const clearCanvas = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    };
-
-    // Draw everything
-    const drawChart = () => {
-      clearCanvas();
-      drawBackground();
-      drawLineChart();
-      drawPoints();
-      drawLabels();
-    };
-
-    drawChart();
-
-    // Add event listeners for hover
-    canvas.addEventListener('mousemove', handleHover);
-    canvas.addEventListener('mouseleave', clearTooltip);
-
-    return () => {
-      canvas.removeEventListener('mousemove', handleHover);
-      canvas.removeEventListener('mouseleave', clearTooltip);
-    };
-  }, []);
+      // Draw "Need Focus" Layer (0-60)
+      drawLayer(0, 60, 'rgba(255, 0, 0, 0.2)'); // Red for Need Focus
+    },
+  };
 
   return (
-    <div style={{ position: 'relative' }}>
-      <canvas
-        ref={canvasRef}
-        width={600}
-        height={150}
-        style={{ background: '#1c1c1c' }}
-      />
-      {tooltip && (
-        <div
-          style={{
-            position: 'absolute',
-            left: tooltip.x,
-            top: tooltip.y,
-            background: 'rgba(0,0,0,0.7)',
-            padding: '5px 10px',
-            color: '#fff',
-            borderRadius: '5px',
-            pointerEvents: 'none',
-            fontSize: '12px',
-          }}
-        >
-          {tooltip.value}
-        </div>
-      )}
+    <div style={{ width: '800px', height: '400px' }}>
+      <h2>Performance Chart</h2>
+      <Line data={data} options={options} plugins={[backgroundLayerPlugin]} />
     </div>
   );
 };
 
-export default CustomCanvasChart;
+export default PerformanceChart;
