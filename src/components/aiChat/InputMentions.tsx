@@ -83,7 +83,7 @@ const InputMentions:React.FC<InputMentionsProps> = ({value,onChange,onSubmit,cha
         // Replace the @mention with the selected user name
         const lastAtIndex = value.lastIndexOf('@');
         const newText = value.slice(0, lastAtIndex) + `@${mention.name} `;
-        handelChange(newText)
+        handelChange(newText+" ")
         // onChange(newText);
         setIsShowMentions(false);
     }; 

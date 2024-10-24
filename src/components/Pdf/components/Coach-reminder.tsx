@@ -12,13 +12,13 @@ const CoachReminder = ({item,title,styles}:{item:any,title:string,styles:any})  
                     {/* Table Header */}
                     <View style={styles.tableRow}>
                     <View style={styles.tableCol}>
-                        <Text style={styles.tableCell}>condition</Text>
+                        <Text style={styles.tableCell}>Condition</Text>
                     </View>
                     <View style={styles.tableCol}>
-                        <Text style={styles.tableCell}>recommendations</Text>
+                        <Text style={styles.tableCell}>Recommendations</Text>
                     </View>      
                     <View style={styles.tableCol}>
-                        <Text style={styles.tableCell}>contraindications</Text>
+                        <Text style={styles.tableCell}>Contraindications</Text>
                     </View>                                          
                     </View>
 
@@ -28,10 +28,10 @@ const CoachReminder = ({item,title,styles}:{item:any,title:string,styles:any})  
                         <>
                             <View style={styles.tableRow} key={index}>
                             <View style={styles.tableCol}>
-                                <Text style={styles.tableCell}>{el.condition}</Text>
+                                <Text style={styles.tableCell}>{el.Condition}</Text>
                             </View>
                             <View style={styles.tableCol}>
-                            {el.recommendations.map((val:any) => {
+                            {el.Recommendations.map((val:any) => {
                                     return(
                                         <>
                                             <Text style={styles.tableCell}>{val}</Text>
@@ -41,7 +41,7 @@ const CoachReminder = ({item,title,styles}:{item:any,title:string,styles:any})  
                             </View>
 
                             <View style={styles.tableCol}>
-                            {el.contraindications.map((val:any) => {
+                            {el.Contraindications.map((val:any) => {
                                     return(
                                         <>
                                             <Text style={styles.tableCell}>{val}</Text>
