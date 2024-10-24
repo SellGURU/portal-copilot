@@ -2,7 +2,7 @@ import { useState } from "react"
 import SummaryBox from "./SummaryBox"
 
 const ReportAnalyse = () => {
-    const [generateStep,] = useState("Client Summary")
+    const [generateStep,setGeneralStep] = useState("Client Summary")
     const ClientSummaryBoxs = [
         {
             name:'Thyroid Health',
@@ -59,6 +59,9 @@ const ReportAnalyse = () => {
             icon:''
         }                                                                        
     ]
+    const changeStep = (step:string) => {
+        setGeneralStep(step)
+    }
     return (
         <>
             <div className="w-full bg-[#121212] min-h-screen h-full">
@@ -68,7 +71,7 @@ const ReportAnalyse = () => {
                     </div>
                     <div className="flex-grow w-full relative">
                         <div className="w-full absolute  h-[56px] flex justify-evenly border-light-border-color bg-white border dark:border-[#383838]  dark:bg-[#272727] rounded-[6px] ">
-                            <div className="flex justify-center items-center gap-2">
+                            <div onClick={() =>  changeStep("Client Summary")} className="flex  cursor-pointer justify-center items-center gap-2">
                                 <div className={`w-5 h-5 rounded-full ${generateStep=='Client Summary'?'dark:border-primary-color dark:text-primary-color text-light-blue-active border-light-blue-active':'text-light-primary-text border-light-primary-text dark:text-[#FFFFFF99]'} border flex justify-center items-center text-[12px] font-medium `}>1</div>
                                 <div className={`text-[12px] ${generateStep=='Client Summary'?'dark:text-primary-color text-light-blue-active':' text-light-primary-text dark:text-[#FFFFFF99]'} font-medium `}>Client Summary</div>
                             </div>
@@ -76,21 +79,23 @@ const ReportAnalyse = () => {
                             <img className="w-[16px] invert dark:invert-0" src="./Themes/Aurora/icons/nextStep.svg" alt="" />
 
                             
-                            <div className="flex justify-center items-center gap-2">
-                                <div className={`w-5 h-5 rounded-full ${generateStep=='Out of Reference '?'dark:border-primary-color dark:text-primary-color text-light-blue-active border-light-blue-active':'text-light-primary-text border-light-primary-text dark:text-[#FFFFFF99]'} border flex justify-center items-center text-[12px] font-medium `}>2</div>
-                                <div className={`text-[12px] ${generateStep=='Out of Reference '?'dark:text-primary-color text-light-blue-active':' text-light-primary-text dark:text-[#FFFFFF99]'} font-medium `}>Out of Reference </div>
+                            <div onClick={() => {
+                                changeStep("Out of Reference")
+                            }} className="flex  cursor-pointer justify-center items-center gap-2">
+                                <div className={`w-5 h-5 rounded-full ${generateStep=='Out of Reference'?'dark:border-primary-color dark:text-primary-color text-light-blue-active border-light-blue-active':'text-light-primary-text border-light-primary-text dark:text-[#FFFFFF99]'} border flex justify-center items-center text-[12px] font-medium `}>2</div>
+                                <div className={`text-[12px] ${generateStep=='Out of Reference'?'dark:text-primary-color text-light-blue-active':' text-light-primary-text dark:text-[#FFFFFF99]'} font-medium `}>Out of Reference </div>
                             </div>  
 
                             <img className="w-[16px] invert dark:invert-0" src="./Themes/Aurora/icons/nextStep.svg" alt="" />
                             
-                            <div className="flex justify-center items-center gap-2">
+                            <div onClick={() =>  changeStep("Groups")} className="flex cursor-pointer justify-center items-center gap-2">
                                 <div className={`w-5 h-5 rounded-full ${generateStep=='Groups'?'dark:border-primary-color dark:text-primary-color text-light-blue-active border-light-blue-active':'text-light-primary-text border-light-primary-text dark:text-[#FFFFFF99]'} border flex justify-center items-center text-[12px] font-medium `}>3</div>
                                 <div className={`text-[12px] ${generateStep=='Groups'?'dark:text-primary-color text-light-blue-active':' text-light-primary-text dark:text-[#FFFFFF99]'} font-medium `}>Groups</div>
                             </div>    
 
                             <img className="w-[16px] invert dark:invert-0" src="./Themes/Aurora/icons/nextStep.svg" alt="" />
                             
-                            <div className="flex justify-center items-center gap-2">
+                            <div onClick={() =>  changeStep("Table Results")} className="flex cursor-pointer justify-center items-center gap-2">
                                 <div className={`w-5 h-5 rounded-full ${generateStep=='Table Results'?'dark:border-primary-color dark:text-primary-color text-light-blue-active border-light-blue-active':'text-light-primary-text border-light-primary-text dark:text-[#FFFFFF99]'} border flex justify-center items-center text-[12px] font-medium `}>4</div>
                                 <div className={`text-[12px] ${generateStep=='Table Results'?'dark:text-primary-color text-light-blue-active':' text-light-primary-text dark:text-[#FFFFFF99]'} font-medium `}>Table Results</div>
                             </div>   
