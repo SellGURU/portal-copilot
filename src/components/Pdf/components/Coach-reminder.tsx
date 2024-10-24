@@ -31,7 +31,7 @@ const CoachReminder = ({item,title,styles}:{item:any,title:string,styles:any})  
                                 <Text style={styles.tableCell}>{el.condition}</Text>
                             </View>
                             <View style={styles.tableCol}>
-                            {el.recommendations.map((val:any) => {
+                            {el.Recommendations.map((val:any) => {
                                     return(
                                         <>
                                             <Text style={styles.tableCell}>{val}</Text>
@@ -41,7 +41,7 @@ const CoachReminder = ({item,title,styles}:{item:any,title:string,styles:any})  
                             </View>
 
                             <View style={styles.tableCol}>
-                            {el.contraindications.map((val:any) => {
+                            {el.Contraindications.map((val:any) => {
                                     return(
                                         <>
                                             <Text style={styles.tableCell}>{val}</Text>
