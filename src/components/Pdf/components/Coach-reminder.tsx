@@ -28,7 +28,7 @@ const CoachReminder = ({item,title,styles}:{item:any,title:string,styles:any})  
                         <>
                             <View style={styles.tableRow} key={index}>
                             <View style={styles.tableCol}>
-                                <Text style={styles.tableCell}>{el.condition}</Text>
+                                <Text style={styles.tableCell}>{el.Condition}</Text>
                             </View>
                             <View style={styles.tableCol}>
                             {el.Recommendations.map((val:any) => {

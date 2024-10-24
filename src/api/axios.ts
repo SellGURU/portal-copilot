@@ -19,7 +19,7 @@ axios.interceptors.response.use((response) => {
     }    
     return response;
 }, (error) => {
-    if(error.status ==401 ){
+    if(error.response.status ==401 || error.data.detail =='Invalid token.'){
         localStorage.clear()
         window.location.reload(); 
     }      
